@@ -21,7 +21,6 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
    cd C:\ruta\deseada\
    
 - En Linux/Mac:
-   En Linux/Mac:
    ```bash
    cd /ruta/deseada/
   
