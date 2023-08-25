@@ -37,12 +37,19 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
    docker build -t dr_workflow .
 
 6. Ejecuta el contenedor y accede a la interfaz de línea de comandos:
+-En Windows:
    ```bash
    docker run -v "C:\ubicación\de\los\archivos\a\analizar:/app/data" -it dr_workflow
-Cambia C:\ruta\de\los\archivos\a\analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar
+NOTA: Cambia C:\ubicacion\de\los\archivos\a\analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar
 
-7. Sigue las instrucciones en la línea de comandos para cargar datos y realizar análisis.
+- En Linux/Mac:
+   ```bash
+   docker run -v "/ruta/local/de/los/archivos/a/analizar:/app/data" -it dr_workflow
+NOTA: Cambia /ubicacion/local/de/los/archivos/a/analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar
 
+7. ¡EMPIEZA A ANALIZAR LOS DATOS DE TUS PACIENTES!
+   NOTA: Para cargar los archivos solo debe ingregar el nombre del archivo a analizar seguido de .csv, por ejemplo, si tenemos los datos en "misDatos" se carga como "misDatos.csv"
+   
 ### Requisitos Previos
 
 - Docker: Asegúrate de tener Docker instalado en tu sistema antes de comenzar. Puedes descargarlo [aquí](https://www.docker.com/products/docker-desktop/).
