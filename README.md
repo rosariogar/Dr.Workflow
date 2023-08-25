@@ -38,12 +38,15 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
 
 6. Ejecuta el contenedor y accede a la interfaz de línea de comandos:
    ```bash
-     docker run -it dr_workflow
+   docker run -v "C:\ubicación\de\los\archivos\a\analizar:/app/data" -it dr_workflow
+Cambia C:\ruta\de\los\archivos\a\analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar
+
 7. Sigue las instrucciones en la línea de comandos para cargar datos y realizar análisis.
 
 ### Requisitos Previos
 
 - Docker: Asegúrate de tener Docker instalado en tu sistema antes de comenzar. Puedes descargarlo [aquí](https://www.docker.com/products/docker-desktop/).
+- CSV: Asegúrese que los archivos que desea analizar estén en formato CSV
 
 ## Uso de Datos de Ejemplo
 Si deseas probar el proyecto con datos reales, puedes descargar el archivo CSV de ejemplo [aquí](https://www.kaggle.com/datasets/emmanuelfwerr/thyroid-disease-data). Sigue las instrucciones en la interfaz de línea de comandos para cargar y utilizar el archivo CSV de ejemplo.
