@@ -46,5 +46,5 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
 - Docker: Asegúrate de tener Docker instalado en tu sistema antes de comenzar. Puedes descargarlo [aquí](https://www.docker.com/products/docker-desktop/).
 
 ## Uso de Datos de Ejemplo
-Si deseas probar el proyecto con datos reales, puedes descargar el archivo CSV de ejemplo [aquí](https://doi.org/10.24432/C5D010). Sigue las instrucciones en la interfaz de línea de comandos para cargar y utilizar el archivo CSV de ejemplo.
+Si deseas probar el proyecto con datos reales, puedes descargar el archivo CSV de ejemplo [aquí](https://www.kaggle.com/datasets/emmanuelfwerr/thyroid-disease-data). Sigue las instrucciones en la interfaz de línea de comandos para cargar y utilizar el archivo CSV de ejemplo.
 
