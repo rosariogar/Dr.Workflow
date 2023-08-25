@@ -49,6 +49,10 @@ NOTA: Cambia /ubicacion/local/de/los/archivos/a/analizar por la ubicación compl
 
 7. ¡EMPIEZA A ANALIZAR LOS DATOS DE TUS PACIENTES!
    NOTA: Para cargar los archivos solo debe ingregar el nombre del archivo a analizar seguido de .csv, por ejemplo, si tenemos los datos en "misDatos" se carga como "misDatos.csv"
+
+## Ejecutar
+Una vez esté instalado correctamente la imagen de Docker, solo tendrá que seguir los pasos 1, 3 y 6 respectivamente.
+   
    
 ### Requisitos Previos
 
