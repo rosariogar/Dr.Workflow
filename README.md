@@ -30,7 +30,7 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
    
 3. Navega a la carpeta del proyecto:
    ```bash
-   cd Dr-Workflow
+   cd DrWorkFlow
    
 5. Construye la imagen Docker ejecutando el siguiente comando:
    ```bash
