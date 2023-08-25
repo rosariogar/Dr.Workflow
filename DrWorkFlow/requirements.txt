@@ -1,7 +1,0 @@
-pandas==1.5.2
-numpy==1.23.5
-matplotlib==3.6.2
-matplotlib-inline==0.1.6
-seaborn==0.12.1
-scikit-learn
-sklearn-crfsuite==0.3.6
