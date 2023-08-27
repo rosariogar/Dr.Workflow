@@ -39,15 +39,19 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
 6. Ejecuta el contenedor y accede a la interfaz de línea de comandos:
 - En Windows:
    ```bash
-   docker run -v "C:\ubicación\de\los\archivos\a\analizar:/app/data" -it dr_workflow
+   docker run -v "C:\ubicación\de\los\archivos\a\analizar:/app/data" -v "C:\ubicacion\de\los\donde/guardar/los/resultados:/app/resultados" -it dr_workflow
+   
 NOTA: Cambia C:\ubicacion\de\los\archivos\a\analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar. 
-NOTA 2: Los archivos generados cuando se analizacen los datos, se guardarán en esta ubicación.
+
+
 
 - En Linux/Mac:
    ```bash
-   docker run -v "/ruta/local/de/los/archivos/a/analizar:/app/data" -it dr_workflow
+   docker run -v "/ubicacion/en/tu/sistema/local/datos_a_analizar:/app/data" -v "/ubicacion/en/tu/sistema/local/donde/guardar/resultados:/app/resultados" -it dr_workflow
+   
 NOTA: Cambia /ubicacion/local/de/los/archivos/a/analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar
-NOTA 2: Los archivos generados cuando se analizacen los datos, se guardarán en esta ubicación.
+
+NOTA 2: Cambia /ubicacion/en/tu/sistema/local/donde/guardar/resultados:/app/resultados por la ubicación completa donde quiere guardar los resultados del análisis de datos.
 
 
 7. ¡EMPIEZA A ANALIZAR LOS DATOS DE TUS PACIENTES!
