@@ -26,7 +26,7 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
   
 2. Clona este repositorio en tu máquina local:
    ```bash
-   git clone https://github.com/rosariogar/Dr.WorkFlow.git
+   git clone https://github.com/rosariogar/Dr.Workflow.git
    
 3. Navega a la carpeta del proyecto:
    ```bash
@@ -51,7 +51,7 @@ NOTA 2: Los archivos generados cuando se analizacen los datos, se guardarán en 
 
 
 7. ¡EMPIEZA A ANALIZAR LOS DATOS DE TUS PACIENTES!
-   NOTA: Para cargar los archivos solo debe ingregar el nombre del archivo a analizar seguido de .csv, por ejemplo, si tenemos los datos guaedados en el archivo "misDatos"" se carga como "misDatos.csv"
+   NOTA: Para cargar los archivos solo debe ingregar el nombre del archivo a analizar seguido de .csv, por ejemplo, si tenemos los datos guardados en el archivo "misDatos"" se carga como "misDatos.csv"
 
 
 ## Ejecutar
