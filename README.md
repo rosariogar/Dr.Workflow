@@ -4,7 +4,7 @@ Dr. Workflow es un flujo de trabajo semi-automatizado diseñado para ayudar a lo
 
 ## Introducción
 
-En el ámbito de la atención médica, el análisis de datos es crucial para tomar decisiones informadas sobre el tratamiento de los pacientes. Dr. Workflow simplifica y agiliza este proceso al proporcionar herramientas automatizadas y guías paso a paso para el análisis de datos. Ya sea que trabajes en investigación clínica, epidemiología o cualquier otro campo relacionado, Dr. Workflow te ayudará a obtener información valiosa de tus datos.
+En el ámbito de la atención médica, el análisis de datos es crucial para tomar decisiones informadas sobre el tratamiento de los pacientes. Dr. Workflow simplifica y agiliza este proceso al proporcionar herramientas automatizadas y guías paso a paso para el análisis de datos.
 
 ## Características Principales
 
