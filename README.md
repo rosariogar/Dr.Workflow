@@ -37,7 +37,7 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
    docker build -t dr_workflow .
 
 6. Ejecuta el contenedor y accede a la interfaz de línea de comandos:
--En Windows:
+- En Windows:
    ```bash
    docker run -v "C:\ubicación\de\los\archivos\a\analizar:/app/data" -it dr_workflow
 NOTA: Cambia C:\ubicacion\de\los\archivos\a\analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar. 
