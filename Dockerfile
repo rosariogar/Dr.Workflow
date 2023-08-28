@@ -10,6 +10,9 @@ COPY componentes.py /app
 COPY requirements.txt /app
 COPY data /app/data
 
+# Crea la carpeta resultados y copia los archivos locales al contenedor
+COPY resultados /app/resultados
+
 # Instala las dependencias
 RUN pip install -r requirements.txt
 

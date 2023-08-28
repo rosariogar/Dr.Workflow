@@ -7,16 +7,16 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from collections import Counter
 from sklearn.utils import resample
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, cross_val_score
 from sklearn.preprocessing import StandardScaler
 from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.naive_bayes import GaussianNB
+
 from sklearn.svm import SVC
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, roc_curve, auc, classification_report
-from datetime import datetime
 
 
 def load_data(file_path):
@@ -32,7 +32,7 @@ def load_data(file_path):
         profile_name = input("\nIngrese como quiere llamar al informe inicial de los datos (sin extensión): ")
         # Generar un informe de perfil con el título personalizado
         profile = pf.ProfileReport(df, title=profile_name, explorative=True)
-        profile_path = os.path.join('/app/data', f'{profile_name}.html')
+        profile_path = os.path.join('/app/resultados', f'{profile_name}.html')
         profile.to_file(profile_path)
         print(f"\nInforme de perfil generado en {profile_path}")
         print("\nArchivo cargado exitosamente")
@@ -66,7 +66,7 @@ def explore_target_variable(df, target_col):
             plt.ylabel('Frecuencia')
             plt.title(f'Distribución de {target_col}')
             image_filename = input("¿Como quieres que se llame la imagen de la variable objetivo? ") + '.png'
-            image_path = os.path.join('/app/data', image_filename)
+            image_path = os.path.join('/app/resultados', image_filename)
             plt.savefig(image_path)
             plt.close()
             print(f"Imagen de la distribución de la clase {target_col} guardada en: {image_path}")
@@ -75,7 +75,7 @@ def explore_target_variable(df, target_col):
             plt.xlabel(target_col)
             plt.title(f'Distribución de {target_col}')
             image_filename = input("¿Como quieres que se llame la imagen de la variable objetivo? ") + '.png'
-            image_path = os.path.join('/app/data', image_filename)
+            image_path = os.path.join('/app/resultados', image_filename)
             plt.savefig(image_path)
             plt.close()
             print(f"Imagen de la distribución de la clase {target_col} guardada en: {image_path}")
@@ -184,18 +184,6 @@ def clean_preprocess_data(df):
     boolean_cols = [col for col in df.columns if df[col].dtype == "bool"]
     df[boolean_cols] = df[boolean_cols].astype(np.int8)
 
-    #Eliminación de los valores atípicos
-    for column in df.columns:
-        if df[column].dtype != 'object':  # Excluimos columnas de tipo objeto (categóricas)
-            q1 = df[column].quantile(0.25)
-            q3 = df[column].quantile(0.75)
-            iqr = q3 - q1
-            
-            lower_bound = q1 - 1.5 * iqr
-            upper_bound = q3 + 1.5 * iqr
-            
-            outliers = df[(df[column] < lower_bound) | (df[column] > upper_bound)]
-            df = df.drop(outliers.index)
     
     # Codificar las variables categóricas como variables numéricas
     categorical_cols = [col for col in df.columns if df[col].dtype == "object"]
@@ -215,11 +203,12 @@ def clean_preprocess_data(df):
     # Rellenar los valores NaN (anteriormente infinitos) con la media de cada columna
     df = df.fillna(column_means)
 
+
     # Solicitar al usuario el nombre del archivo de informe
     profile_name = input("\nIngrese como quiere llamar la tabla de la limpieza de datos (sin extensión): ")
     
     # Guardar el DataFrame limpio en un archivo HTML
-    cleaned_html_path = os.path.join('/app/data', f'{profile_name}.html')
+    cleaned_html_path = os.path.join('/app/resultados', f'{profile_name}.html')
     df.to_html(cleaned_html_path, index=False)
     print(f"DataFrame limpio guardado en: {cleaned_html_path}")
 
@@ -231,7 +220,7 @@ def correlation_matrix(df):
     sns.heatmap(df.corr(), cmap="YlGnBu", annot=True)
     # Guardar la imagen en el sistema de archivos del contenedor
     image_filename = input("\nIngrese como quiere llamar a la imagen de la correlacion: ")  # Nombre del archivo
-    image_path = os.path.join('/app/data', f'{image_filename}.png')
+    image_path = os.path.join('/app/resultados', f'{image_filename}.png')
     plt.savefig(image_path)
     plt.close()
     print(f"Imagen guardada en: {image_path}")
@@ -259,7 +248,7 @@ def standardize_dataframe(df):
     profile_name = input("\nIngrese como quiere llamar la tabla de la estandarizacion de datos (sin extensión): ")
     
     # Guardar el DataFrame limpio en un archivo HTML
-    html_path = os.path.join('/app/data',f'{profile_name}.html')
+    html_path = os.path.join('/app/resultados',f'{profile_name}.html')
     df.to_html(html_path, index=False)
     print(f"DataFrame estandarizado guardado en: {html_path}")
 
@@ -308,7 +297,7 @@ def balance_dataset(data, class_column):
     profile_name = input("\nIngrese como quiere llamar la tabla de los datos balanceados (sin extensión): ")
     
     # Guardar el DataFrame limpio en un archivo HTML
-    html_path = os.path.join('/app/data', f'{profile_name}.html')
+    html_path = os.path.join('/app/resultados', f'{profile_name}.html')
     balanced_data.to_html(html_path, index=False)
     print(f"DataFrame balanceado guardado en: {html_path}")
     
@@ -357,7 +346,11 @@ def autoML(df, target_col, test_size=0.2, random_state=42):
     best_model = None
     best_model_name = None
 
-    for name, model in models.items():   
+    for name, model in models.items():
+
+        scores = cross_val_score(model, X_train, y_train, cv=5, scoring='accuracy')  # Puedes ajustar el número de folds (cv)
+        accuracy = scores.mean()  # Tomar el promedio de las puntuaciones
+ 
         # Entrenamiento
         model.fit(X_train, y_train)
 
@@ -365,26 +358,23 @@ def autoML(df, target_col, test_size=0.2, random_state=42):
         y_pred = model.predict(X_test)
 
         # Evaluación
-        accuracy = accuracy_score(y_test, y_pred)
         precision = precision_score(y_test, y_pred, average='weighted', zero_division=1)
         recall = recall_score(y_test, y_pred, average='weighted', zero_division=1)
         f1 = f1_score(y_test, y_pred, average='weighted', zero_division=1)
+
         # Métricas adicionales
 
         conf_matrix = confusion_matrix(y_test, y_pred)
         if num_classes == 2:
             tn, fp, fn, tp = conf_matrix.ravel()
             specificity = tn / (tn + fp) if (tn + fp).any() != 0 else 0
-            fnr = fn / (fn + tp) if (fn + tp).any() != 0 else 0
             fpr = fp / (fp + tn) if (fp + tn).any() != 0 else 0
         else:
             tn, fp, fn, tp = np.diag(conf_matrix), np.sum(conf_matrix, axis=0) - np.diag(conf_matrix), np.sum(conf_matrix, axis=1) - np.diag(conf_matrix), np.sum(conf_matrix) - (np.sum(conf_matrix, axis=0) + np.sum(conf_matrix, axis=1) - np.diag(conf_matrix))
             specificity = tn / (tn + fp) if (tn + fp).any() != 0 else np.zeros_like(tn)
-            fnr = fn / (fn + tp) if (fn + tp).any() != 0 else np.zeros_like(fn)
             fpr = fp / (fp + tn) if (fp + tn).any() != 0 else np.zeros_like(fp)
         
         s_accuracy = (recall + specificity) / 2
-        f_measure = 2 * (precision * recall) / (precision + recall)
         
          # Calcular AUC solo si es un problema de clasificación binaria
         if num_classes == 2:
@@ -431,7 +421,7 @@ def autoML(df, target_col, test_size=0.2, random_state=42):
 
     # Guardar la curva ROC para el mejor modelo (solo si es clasificación binaria)
     if best_model is not None and num_classes == 2:
-        y_prob_best = best_model.predict_proba(X_test)[:, 1]
+        # y_prob_best = best_model.predict_proba(X_test)[:, 1]
         auc_best = auc(fpr_best, tpr_best)
         plt.figure()
         plt.plot(fpr_best, tpr_best, color='darkorange', lw=2, label='Curva ROC (area = %0.2f)' % auc_best)
@@ -442,9 +432,10 @@ def autoML(df, target_col, test_size=0.2, random_state=42):
         plt.ylabel('Tasa de Verdaderos Positivos')
         plt.title(f'\nCurva ROC de {best_model_name}')
         image_name = input("\nIndica como quieres llamar a la imagen de la curva ROC del mejor modelo ")
-        image_path = os.path.join('/app/data', f'{image_name}.png')
+        image_path = os.path.join('/app/resultados', f'{image_name}.png')
         plt.savefig(image_path)
         plt.close()
+        
 
     # Crear una lista de nombres a partir de las claves del diccionario 'results'
     row_names = list(results.keys())
@@ -455,12 +446,13 @@ def autoML(df, target_col, test_size=0.2, random_state=42):
 
     if num_classes == 2:
         print(f'\nImagen de Curva ROC guardada en: {image_path}')
+
     
     # Solicitar al usuario el nombre del archivo de informe
     profile_name = input("\nIngrese como quiere llamar el resumen de AutoML (sin extensión): ")
     
     # Guardar el DataFrame limpio en un archivo HTML
-    html_path = os.path.join('/app/data', f'{profile_name}.html' )
+    html_path = os.path.join('/app/resultados', f'{profile_name}.html' )
     df_results.to_html(html_path, index=False)
     print(f"\nAutoML guardado en: {html_path}")
         
