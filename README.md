@@ -39,7 +39,7 @@ En el ámbito de la atención médica, el análisis de datos es crucial para tom
 6. Ejecuta el contenedor y accede a la interfaz de línea de comandos:
 - En Windows:
    ```bash
-   docker run -v "C:\ubicación\de\los\archivos\a\analizar:/app/data" -v "C:\ubicacion\de\los\donde/guardar/los/resultados:/app/resultados" -it dr_workflow
+   docker run -v "C:/ubicación/de/los/archivos/a/analizar:/app/data" -v "C:/ubicacion/donde/guardar/los/resultados:/app/resultados" -it dr_workflow
    
 NOTA: Cambia C:\ubicacion\de\los\archivos\a\analizar por la ubicación completa donde se encuentran los archivos CVS que desea analizar. 
 
